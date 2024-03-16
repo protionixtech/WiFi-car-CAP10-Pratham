@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+  <html>
+    <head><meta name=viewport content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>WiFi RC Car Control</title>
+    <style>
+      html { 
+        font-family: Helvetica;
+        display: inline-block;
+        margin: 0px auto;
+        text-align: center;
+        height: 100%;
+      }
+      body{
+        margin-top: 50px;
+        height: 100%;
+      }
+      h1 {
+        color: #444444;
+        margin: 50px auto 30px;
+      }
+      h3 {
+        color: #444444;
+        margin-bottom: 50px;
+      }
+      .button {
+        display: block;
+        width: 80px;
+        background-color: #3498db;
+        border: none;
+        color: white;
+        padding: 30px 30px;
+        text-decoration: none;
+        font-size: 25px;
+        margin: 0px auto 35px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      .button-on {
+        background-color: #3498db;
+      }
+      .button-on:active {
+        background-color: #2980b9;
+      }
+      .button-off {
+        background-color: #34495e;
+      }
+      .button-off:active {
+        background-color: #2c3e50;
+      }
+      p {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 10px;
+      }
+      table {
+        width: 80%;
+        height: 60%;
+        margin-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      td {
+        width: 33%;
+        height: 33%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WiFi RC Car Control</h1>
+    <h3>Made by Protionix</h3>
+    <p>
+      <table>
+        <tr>
+          <td></td>
+          <td><button id="front" onpointerdown="userAction('f')" onpointerup="userAction('s')" class="button button-off"></button></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><button id="left" onpointerdown="userAction('l')" onpointerup="userAction('s')" class="button button-off"></button></td>
+          <td></td>
+          <td><button id="right" onpointerdown="userAction('r')" onpointerup="userAction('s')" class="button button-off"></button></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button id="back" onpointerdown="userAction('b')" onpointerup="userAction('s')" class="button button-off"></button></td>
+          <td></td>
+        </tr>
+      </table>
+    </p>
+    <script>
+      // const host = window.location.protocol + "//" + window.location.host;
+      const userAction = async (movement) => {
+        var call_url = encodeURI('/?movement=' + movement);
+        console.log(call_url);
+        if(movement == 's'){
+          document.getElementById("front").classList.replace("button-on", "button-off");
+          document.getElementById("left").classList.replace("button-on", "button-off");
+          document.getElementById("right").classList.replace("button-on", "button-off");
+          document.getElementById("back").classList.replace("button-on", "button-off");
+        }
+        else if(movement == 'f'){
+          document.getElementById("front").classList.replace("button-off", "button-on");
+          document.getElementById("left").classList.replace("button-on", "button-off");
+          document.getElementById("right").classList.replace("button-on", "button-off");
+          document.getElementById("back").classList.replace("button-on", "button-off");
+        }
+        else if(movement == 'b'){
+          document.getElementById("front").classList.replace("button-on", "button-off");
+          document.getElementById("left").classList.replace("button-on", "button-off");
+          document.getElementById("right").classList.replace("button-on", "button-off");
+          document.getElementById("back").classList.replace("button-off", "button-on");
+        }
+        else if(movement == 'l'){
+          document.getElementById("front").classList.replace("button-on", "button-off");
+          document.getElementById("left").classList.replace("button-off", "button-on");
+          document.getElementById("right").classList.replace("button-on", "button-off");
+          document.getElementById("back").classList.replace("button-on", "button-off");
+        }
+        else if(movement == 'r'){
+          document.getElementById("front").classList.replace("button-on", "button-off");
+          document.getElementById("left").classList.replace("button-on", "button-off");
+          document.getElementById("right").classList.replace("button-off", "button-on");
+          document.getElementById("back").classList.replace("button-on", "button-off");
+        }
+        const response = await fetch(call_url);
+        const myJson = await response.json();
+      }
+    </script>
+  </body>
+</html>
